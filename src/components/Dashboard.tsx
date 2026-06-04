@@ -310,9 +310,6 @@ export function Dashboard({
     }
   }
 
-  console.log("Render Dashboard", { pageId, status, settings, view });
-  console.log("sidebar state", { editorTab, editorSide, editorPanelWidth });
-
   return (
     <main className="workspace">
       <header className="workspace-header">

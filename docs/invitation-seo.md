@@ -36,13 +36,13 @@ supabase secrets set APP_URL="https://webding.app"
 La liga social se genera asi:
 
 ```txt
-https://wyghdpkxhpxnqomosivh.supabase.co/functions/v1/invitation-meta?slug=boda-david-y-ana
+https://tu-proyecto.supabase.co/functions/v1/invitation-meta?slug=boda-david-y-ana
 ```
 
 Si hay dominio personalizado:
 
 ```txt
-https://wyghdpkxhpxnqomosivh.supabase.co/functions/v1/invitation-meta?domain=boda-davidyanna.com
+https://tu-proyecto.supabase.co/functions/v1/invitation-meta?domain=boda-davidyanna.com
 ```
 
 En el dashboard, el boton con icono de compartir copia esta liga optimizada para preview social.
