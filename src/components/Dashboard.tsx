@@ -3,7 +3,6 @@ import type { CSSProperties, KeyboardEvent, PointerEvent as ReactPointerEvent } 
 import type { Session } from "@supabase/supabase-js";
 import {
   CheckCircle2,
-  Heart,
   LayoutTemplate,
   LogOut,
   Monitor,
@@ -33,6 +32,7 @@ import { GuestListManager } from "./GuestListManager";
 import { ProfileDashboard } from "./ProfileDashboard";
 import { RsvpControlPanel } from "./RsvpControlPanel";
 import { WeddingPreview } from "./WeddingPreview";
+import { BrandLogo } from "./BrandLogo";
 
 type PreviewDevice = "desktop" | "tablet" | "mobile";
 type EditorTab = "design" | "guests" | "rsvp";
@@ -351,8 +351,7 @@ export function Dashboard({
     <main className="workspace">
       <header className="workspace-header">
         <a className="brand" href="#home">
-          <Heart size={18} />
-          Webding
+          <BrandLogo />
         </a>
         <div className="workspace-actions">
           <button

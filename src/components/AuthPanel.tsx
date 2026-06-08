@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Heart } from 'lucide-react'
 import { supabase } from '../lib/supabase'
+import { BrandLogo } from './BrandLogo'
 
 type AuthMode = 'login' | 'signup' | 'forgot' | 'reset'
 
@@ -64,8 +64,7 @@ export function AuthPanel({ initialMode = 'login', onDone }: { initialMode?: Aut
     <section className="auth-screen">
       <div className="auth-panel">
         <a className="brand" href="#home">
-          <Heart size={18} />
-          Webding
+          <BrandLogo />
         </a>
         <h1>{titleByMode[mode]}</h1>
         {mode !== 'reset' && (

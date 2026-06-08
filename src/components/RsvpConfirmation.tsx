@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { FormEvent } from 'react'
-import { CheckCircle2, Heart, MessageCircle, Users, XCircle } from 'lucide-react'
+import { CheckCircle2, MessageCircle, Users, XCircle } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import type { RsvpStatus, WeddingGuestRow, WeddingPageRow, WeddingSettings } from '../types'
 import { normalizeSettings } from '../utils/wedding'
 import { WeddingPreview } from './WeddingPreview'
+import { BrandLogo } from './BrandLogo'
 
 type GuestWithPage = {
   guest: WeddingGuestRow
@@ -159,8 +160,7 @@ export function RsvpConfirmation({
     <main className="rsvp-page">
       <section className="rsvp-form-panel">
         <a className="brand" href={customDomain ? '/' : `/evento/${data.page.slug}`}>
-          <Heart size={18} />
-          Webding
+          <BrandLogo />
         </a>
         <form className="rsvp-card" onSubmit={submitRsvp}>
           <span>{data.page.title}</span>

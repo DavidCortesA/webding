@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { ArrowLeft, Heart } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
+import { BrandLogo } from './BrandLogo'
 
 type LegalPageProps = {
   type: 'terms' | 'privacy'
@@ -100,17 +101,14 @@ export function LegalPage({ type }: LegalPageProps) {
   }, [description, title])
 
   return (
-    <main className="min-h-screen bg-[#FAF7F2] text-[#1E1E1E]">
-      <header className="border-b border-[#1E1E1E]/10 bg-white/85 px-4 py-4 backdrop-blur md:px-8">
+    <main className="min-h-screen bg-[#FAF7F2] text-[#2E3A59]">
+      <header className="border-b border-[#2E3A59]/10 bg-white/85 px-4 py-4 backdrop-blur md:px-8">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
-          <a className="inline-flex items-center gap-2 text-lg font-bold" href="#home" aria-label="Volver al inicio">
-            <span className="grid size-9 place-items-center rounded-full bg-[#1E1E1E] text-white">
-              <Heart size={17} />
-            </span>
-            Webding
+          <a className="brand" href="#home" aria-label="Volver al inicio">
+            <BrandLogo />
           </a>
           <a
-            className="inline-flex items-center gap-2 rounded-full border border-[#1E1E1E]/10 bg-white px-4 py-2 text-sm font-semibold transition hover:border-[#C89B5B] hover:text-[#C89B5B]"
+            className="inline-flex items-center gap-2 rounded-full border border-[#2E3A59]/10 bg-white px-4 py-2 text-sm font-semibold transition hover:border-[#C89B5B] hover:text-[#C89B5B]"
             href="#home"
           >
             <ArrowLeft size={16} />
@@ -123,30 +121,30 @@ export function LegalPage({ type }: LegalPageProps) {
         <div className="mx-auto max-w-5xl">
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.28em] text-[#C89B5B]">Legal Webding</p>
           <h1 className="max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">{title}</h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-[#1E1E1E]/70">{description}</p>
-          <p className="mt-4 text-sm font-semibold text-[#1E1E1E]/55">Ultima actualizacion: {updatedAt}</p>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-[#2E3A59]/70">{description}</p>
+          <p className="mt-4 text-sm font-semibold text-[#2E3A59]/55">Ultima actualizacion: {updatedAt}</p>
         </div>
       </section>
 
       <section className="px-4 pb-16 md:px-8 md:pb-24">
         <div className="mx-auto grid max-w-5xl gap-4">
           {sections.map((section) => (
-            <article key={section.title} className="rounded-[28px] border border-[#1E1E1E]/10 bg-white p-6 shadow-sm md:p-8">
+            <article key={section.title} className="rounded-[28px] border border-[#2E3A59]/10 bg-white p-6 shadow-sm md:p-8">
               <h2 className="text-xl font-bold">{section.title}</h2>
-              <p className="mt-3 leading-8 text-[#1E1E1E]/68">{section.text}</p>
+              <p className="mt-3 leading-8 text-[#2E3A59]/68">{section.text}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="bg-[#1E1E1E] px-4 py-12 text-white md:px-8">
+      <section className="bg-[#2E3A59] px-4 py-12 text-white md:px-8">
         <div className="mx-auto flex max-w-5xl flex-col gap-5 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-2xl font-bold">Contacto legal</h2>
             <p className="mt-2 text-white/65">Para dudas sobre estos documentos o tus datos, escribenos.</p>
           </div>
           <a
-            className="inline-flex w-fit items-center justify-center rounded-full bg-[#C89B5B] px-6 py-3 text-sm font-bold text-[#1E1E1E] transition hover:bg-white"
+            className="inline-flex w-fit items-center justify-center rounded-full bg-[#C89B5B] px-6 py-3 text-sm font-bold text-[#2E3A59] transition hover:bg-white"
             href="mailto:hola@webding.app"
           >
             hola@webding.app

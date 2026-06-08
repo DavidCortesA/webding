@@ -8,7 +8,6 @@ import {
   Crown,
   Gift,
   Globe2,
-  Heart,
   Image,
   MapPin,
   MessageCircle,
@@ -18,6 +17,7 @@ import {
   Timer,
   Users,
 } from "lucide-react";
+import { BrandLogo } from "./BrandLogo";
 
 type MarketingProps = {
   session: Session | null;
@@ -183,11 +183,11 @@ function SectionHeading({
       <span className="text-xs font-bold uppercase tracking-[0.24em] text-[#C89B5B]">
         {eyebrow}
       </span>
-      <h2 className="mt-4 text-4xl font-semibold leading-[0.95] text-[#1E1E1E] md:text-6xl">
+      <h2 className="mt-4 text-4xl font-semibold leading-[0.95] text-[#2E3A59] md:text-6xl">
         {title}
       </h2>
       {text && (
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#1E1E1E]/65 md:text-lg">
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#2E3A59]/65 md:text-lg">
           {text}
         </p>
       )}
@@ -199,7 +199,7 @@ function CtaButtons({ onPrimary }: { onPrimary: () => void }) {
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
       <button
-        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1E1E1E] px-6 text-sm font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#C89B5B]"
+        className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#2E3A59] px-6 text-sm font-bold text-white shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:bg-black focus:outline-none focus:ring-2 focus:ring-[#C89B5B]"
         type="button"
         onClick={onPrimary}
       >
@@ -207,7 +207,7 @@ function CtaButtons({ onPrimary }: { onPrimary: () => void }) {
         <ArrowRight size={17} />
       </button>
       <a
-        className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#1E1E1E]/15 bg-white/80 px-6 text-sm font-bold text-[#1E1E1E] backdrop-blur transition hover:-translate-y-0.5 hover:border-[#C89B5B] focus:outline-none focus:ring-2 focus:ring-[#C89B5B]"
+        className="inline-flex min-h-12 items-center justify-center rounded-full border border-[#2E3A59]/15 bg-white/80 px-6 text-sm font-bold text-[#2E3A59] backdrop-blur transition hover:-translate-y-0.5 hover:border-[#C89B5B] focus:outline-none focus:ring-2 focus:ring-[#C89B5B]"
         href="#demo"
       >
         Ver demo
@@ -224,7 +224,7 @@ export function Marketing({
   const primaryAction = session ? onOpenDashboard : onStart;
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#FAF7F2] text-[#1E1E1E]">
+    <main className="min-h-screen overflow-hidden bg-[#FAF7F2] text-[#2E3A59]">
       <nav
         className="fixed inset-x-0 top-0 z-40 border-b border-white/20 bg-[#FAF7F2]/80 px-4 backdrop-blur-xl md:px-8"
         aria-label="Navegacion principal"
@@ -235,24 +235,21 @@ export function Marketing({
             href="#home"
             aria-label="Webding inicio"
           >
-            <span className="grid size-9 place-items-center rounded-full bg-[#1E1E1E] text-white">
-              <Heart size={17} />
-            </span>
-            Webding
+            <BrandLogo />
           </a>
-          <div className="hidden items-center gap-7 text-sm font-semibold text-[#1E1E1E]/70 md:flex">
-            <a className="hover:text-[#1E1E1E]" href="#beneficios">
+          <div className="hidden items-center gap-7 text-sm font-semibold text-[#2E3A59]/70 md:flex">
+            <a className="hover:text-[#2E3A59]" href="#beneficios">
               Beneficios
             </a>
-            <a className="hover:text-[#1E1E1E]" href="#templates">
+            <a className="hover:text-[#2E3A59]" href="#templates">
               Templates
             </a>
-            <a className="hover:text-[#1E1E1E]" href="#faq">
+            <a className="hover:text-[#2E3A59]" href="#faq">
               FAQ
             </a>
           </div>
           <button
-            className="rounded-full border border-[#1E1E1E]/15 bg-white px-4 py-2 text-sm font-bold transition hover:border-[#C89B5B]"
+            className="rounded-full border border-[#2E3A59]/15 bg-white px-4 py-2 text-sm font-bold transition hover:border-[#C89B5B]"
             type="button"
             onClick={primaryAction}
           >
@@ -327,7 +324,7 @@ export function Marketing({
                 <h2 className="mt-3 text-5xl font-semibold leading-none">
                   Ana & David
                 </h2>
-                <p className="mx-auto mt-4 max-w-xs text-sm leading-6 text-[#1E1E1E]/65">
+                <p className="mx-auto mt-4 max-w-xs text-sm leading-6 text-[#2E3A59]/65">
                   RSVP por familia, galeria, mapa, musica y mesa de regalos en
                   una experiencia movil.
                 </p>
@@ -361,7 +358,7 @@ export function Marketing({
         >
           {benefits.map(({ Icon, title, text }) => (
             <motion.article
-              className="rounded-3xl border border-[#1E1E1E]/8 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+              className="rounded-3xl border border-[#2E3A59]/8 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
               key={title}
               variants={fadeUp}
             >
@@ -369,7 +366,7 @@ export function Marketing({
                 <Icon size={22} />
               </div>
               <h3 className="mt-6 text-xl font-semibold">{title}</h3>
-              <p className="mt-3 leading-7 text-[#1E1E1E]/62">{text}</p>
+              <p className="mt-3 leading-7 text-[#2E3A59]/62">{text}</p>
             </motion.article>
           ))}
         </motion.div>
@@ -383,7 +380,7 @@ export function Marketing({
         <div className="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-5">
           {steps.map((step, index) => (
             <motion.article
-              className="relative rounded-3xl border border-[#1E1E1E]/8 bg-[#FAF7F2] p-6"
+              className="relative rounded-3xl border border-[#2E3A59]/8 bg-[#FAF7F2] p-6"
               initial="hidden"
               key={step}
               variants={fadeUp}
@@ -431,7 +428,7 @@ export function Marketing({
         </div>
       </section>
 
-      <section className="bg-[#1E1E1E] px-4 py-20 text-white md:px-8 md:py-28">
+      <section className="bg-[#2E3A59] px-4 py-20 text-white md:px-8 md:py-28">
         <motion.div
           className="mx-auto max-w-3xl text-center"
           initial="hidden"
@@ -480,7 +477,7 @@ export function Marketing({
               <strong className="text-5xl font-semibold text-[#C89B5B]">
                 {value}
               </strong>
-              <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-[#1E1E1E]/58">
+              <p className="mt-3 text-sm font-bold uppercase tracking-[0.16em] text-[#2E3A59]/58">
                 {label}
               </p>
             </motion.article>
@@ -504,7 +501,7 @@ export function Marketing({
               whileInView="show"
             >
               <ShieldCheck className="text-[#C89B5B]" size={22} />
-              <blockquote className="mt-6 leading-7 text-[#1E1E1E]/70">
+              <blockquote className="mt-6 leading-7 text-[#2E3A59]/70">
                 "{quote}"
               </blockquote>
               <figcaption className="mt-6 font-semibold">{name}</figcaption>
@@ -521,13 +518,13 @@ export function Marketing({
         <div className="mx-auto mt-12 grid max-w-3xl gap-3">
           {faqs.map(([question, answer]) => (
             <details
-              className="group rounded-2xl border border-[#1E1E1E]/10 bg-[#FAF7F2] p-5"
+              className="group rounded-2xl border border-[#2E3A59]/10 bg-[#FAF7F2] p-5"
               key={question}
             >
               <summary className="cursor-pointer list-none font-semibold outline-none focus:ring-2 focus:ring-[#C89B5B]">
                 {question}
               </summary>
-              <p className="mt-4 leading-7 text-[#1E1E1E]/65">{answer}</p>
+              <p className="mt-4 leading-7 text-[#2E3A59]/65">{answer}</p>
             </details>
           ))}
         </div>
@@ -535,7 +532,7 @@ export function Marketing({
 
       <section className="px-4 py-20 md:px-8 md:py-28">
         <motion.div
-          className="mx-auto max-w-5xl rounded-[2rem] bg-[#1E1E1E] p-8 text-center text-white md:p-16"
+          className="mx-auto max-w-5xl rounded-[2rem] bg-[#2E3A59] p-8 text-center text-white md:p-16"
           initial="hidden"
           variants={fadeUp}
           viewport={{ once: true }}
@@ -549,7 +546,7 @@ export function Marketing({
           </h2>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <button
-              className="rounded-full bg-white px-6 py-3 text-sm font-bold text-[#1E1E1E]"
+              className="rounded-full bg-white px-6 py-3 text-sm font-bold text-[#2E3A59]"
               type="button"
               onClick={primaryAction}
             >
@@ -565,15 +562,15 @@ export function Marketing({
         </motion.div>
       </section>
 
-      <footer className="border-t border-[#1E1E1E]/10 bg-white px-4 py-10 md:px-8">
+      <footer className="border-t border-[#2E3A59]/10 bg-white px-4 py-10 md:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <a
-            className="inline-flex items-center gap-2 text-xl font-bold"
+            className="brand"
             href="#home"
           >
-            <Heart size={18} /> Webding
+            <BrandLogo />
           </a>
-          <div className="flex flex-wrap gap-5 text-sm font-semibold text-[#1E1E1E]/65">
+          <div className="flex flex-wrap gap-5 text-sm font-semibold text-[#2E3A59]/65">
             <a href="#terms">Terminos</a>
             <a href="#privacy">Privacidad</a>
             <a href="mailto:hola@webding.app">Contacto</a>
