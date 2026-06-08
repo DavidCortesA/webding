@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import type { DragEvent } from 'react'
-import { ArrowDown, ArrowUp, CreditCard, Gift, GripVertical, Image, MapPin, Upload } from 'lucide-react'
+import { ArrowDown, ArrowUp, CalendarRange, CreditCard, FileText, Gift, GripVertical, Images, MapPin, Palette, Upload, UserRound } from 'lucide-react'
 import {
   ceremonyIcons,
   colorThemes,
@@ -15,6 +16,16 @@ import type { WeddingSettings } from '../types'
 import { getPlaceMapLink, slugify } from '../utils/wedding'
 import { DomainSettings } from './DomainSettings'
 
+type EditorSection = 'general' | 'events' | 'appearance' | 'content' | 'photos'
+
+const editorSections = [
+  { value: 'general', label: 'General', description: 'Datos, URL y contacto', Icon: UserRound },
+  { value: 'events', label: 'Eventos', description: 'Ceremonia y recepcion', Icon: CalendarRange },
+  { value: 'appearance', label: 'Apariencia', description: 'Template, colores y orden', Icon: Palette },
+  { value: 'content', label: 'Contenido', description: 'Textos, musica y regalos', Icon: FileText },
+  { value: 'photos', label: 'Fotos', description: 'Portada y galeria', Icon: Images },
+] satisfies Array<{ value: EditorSection; label: string; description: string; Icon: typeof UserRound }>
+
 export function EditorFields({
   settings,
   onChange,
@@ -24,6 +35,8 @@ export function EditorFields({
   onChange: (partial: Partial<WeddingSettings>) => void
   onUploadPhoto?: (index: number, file: File) => Promise<void>
 }) {
+  const [activeSection, setActiveSection] = useState<EditorSection>('general')
+
   function updatePhoto(index: number, value: string) {
     const photos = [...settings.photos]
     photos[index] = value
@@ -85,7 +98,28 @@ export function EditorFields({
   }
 
   return (
-    <div className="field-stack">
+    <div className="editor-fields">
+      <nav className="editor-section-nav" aria-label="Secciones de personalizacion">
+        {editorSections.map(({ value, label, Icon }) => (
+          <button
+            className={activeSection === value ? 'active' : ''}
+            key={value}
+            type="button"
+            onClick={() => setActiveSection(value)}
+          >
+            <Icon size={16} />
+            <span>{label}</span>
+          </button>
+        ))}
+      </nav>
+
+      <div className="editor-section-heading">
+        <span>{editorSections.find((section) => section.value === activeSection)?.label}</span>
+        <p>{editorSections.find((section) => section.value === activeSection)?.description}</p>
+      </div>
+
+      <div className="field-stack">
+      {activeSection === 'appearance' && (
       <fieldset>
         <legend>Template inicial</legend>
         <div className="template-select-grid">
@@ -102,7 +136,10 @@ export function EditorFields({
           ))}
         </div>
       </fieldset>
+      )}
 
+      {activeSection === 'general' && (
+      <>
       <div className="field-grid two">
         <label>
           Novia
@@ -158,7 +195,11 @@ export function EditorFields({
         Mensaje para confirmar
         <input value={settings.whatsappMessage} onChange={(event) => onChange({ whatsappMessage: event.target.value })} />
       </label>
+      </>
+      )}
 
+      {activeSection === 'events' && (
+      <>
       <fieldset>
         <legend>Ceremonia religiosa</legend>
         <label>
@@ -284,12 +325,18 @@ export function EditorFields({
           </div>
         </label>
       </fieldset>
+      </>
+      )}
 
+      {activeSection === 'content' && (
       <label>
         Palabras para invitados
         <textarea value={settings.words} onChange={(event) => onChange({ words: event.target.value })} />
       </label>
+      )}
 
+      {activeSection === 'appearance' && (
+      <>
       <fieldset>
         <legend>10 temas de 5 colores</legend>
         <div className="theme-grid">
@@ -337,6 +384,11 @@ export function EditorFields({
           ))}
         </select>
       </label>
+      </>
+      )}
+
+      {activeSection === 'content' && (
+      <>
       <fieldset>
         <legend>Cancion de Spotify</legend>
         <label>
@@ -356,7 +408,10 @@ export function EditorFields({
           Intentar reproducir al entrar
         </label>
       </fieldset>
+      </>
+      )}
 
+      {activeSection === 'content' && (
       <fieldset>
         <legend>Playlist de Spotify</legend>
         <label>
@@ -368,7 +423,10 @@ export function EditorFields({
           />
         </label>
       </fieldset>
+      )}
 
+      {activeSection === 'content' && (
+      <>
       <fieldset>
         <legend>Texto final</legend>
         <label className="toggle-row">
@@ -386,7 +444,10 @@ export function EditorFields({
           </label>
         )}
       </fieldset>
+      </>
+      )}
 
+      {activeSection === 'appearance' && (
       <fieldset>
         <legend>Template personalizado</legend>
         <label className="toggle-row">
@@ -450,7 +511,10 @@ export function EditorFields({
           </div>
         )}
       </fieldset>
+      )}
 
+      {activeSection === 'content' && (
+      <>
       <fieldset>
         <legend>Sobre o regalo</legend>
         <div className="segmented">
@@ -524,10 +588,13 @@ export function EditorFields({
           </label>
         )}
       </fieldset>
+      </>
+      )}
 
+      {activeSection === 'photos' && (
       <div className="photos-editor">
         <div className="photos-header">
-          <Image size={18} />
+          <Images size={18} />
           <h2>10 fotos y posiciones</h2>
         </div>
         <label className="toggle-row">
@@ -560,6 +627,8 @@ export function EditorFields({
             </label>
           </div>
         ))}
+      </div>
+      )}
       </div>
     </div>
   )

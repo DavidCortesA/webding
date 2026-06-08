@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import type { CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { CSSProperties, KeyboardEvent, PointerEvent as ReactPointerEvent } from "react";
 import type { Session } from "@supabase/supabase-js";
 import {
   CheckCircle2,
@@ -77,6 +77,11 @@ export function Dashboard({
   const [editorTab, setEditorTab] = useState<EditorTab>("design");
   const [editorSide, setEditorSide] = useState<EditorSide>("left");
   const [editorPanelWidth, setEditorPanelWidth] = useState(420);
+  const editorPanelWidthRef = useRef(editorPanelWidth);
+
+  useEffect(() => {
+    editorPanelWidthRef.current = editorPanelWidth;
+  }, [editorPanelWidth]);
 
   useEffect(() => {
     async function loadPages() {
@@ -138,6 +143,38 @@ export function Dashboard({
 
   function updateSettings(partial: Partial<WeddingSettings>) {
     setSettings((current) => normalizeSettings({ ...current, ...partial }));
+  }
+
+  function resizeEditorPanel(event: ReactPointerEvent<HTMLDivElement>) {
+    event.preventDefault();
+    const startX = event.clientX;
+    const startWidth = editorPanelWidthRef.current;
+    document.body.classList.add("resizing-editor");
+
+    function onPointerMove(moveEvent: PointerEvent) {
+      const movement = moveEvent.clientX - startX;
+      const direction = editorSide === "left" ? 1 : -1;
+      setEditorPanelWidth(Math.min(620, Math.max(340, startWidth + movement * direction)));
+    }
+
+    function stopResize() {
+      document.body.classList.remove("resizing-editor");
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", stopResize);
+      window.removeEventListener("pointercancel", stopResize);
+    }
+
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", stopResize);
+    window.addEventListener("pointercancel", stopResize);
+  }
+
+  function resizeEditorWithKeyboard(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    const direction = event.key === "ArrowRight" ? 1 : -1;
+    const sideDirection = editorSide === "left" ? direction : -direction;
+    setEditorPanelWidth((current) => Math.min(620, Math.max(340, current + sideDirection * 20)));
   }
 
   async function uploadPhoto(index: number, file: File) {
@@ -356,44 +393,8 @@ export function Dashboard({
             { "--editor-panel-width": `${editorPanelWidth}px` } as CSSProperties
           }
         >
-          <aside className="editor-panel">
-            <div className="panel-title flex items-center justify-between" aria-label="Titulo del panel del editor">
-              <div className="flex items-center gap-2">
-                {editorTab === "design" ? (
-                  <LayoutTemplate size={18} />
-                ) : editorTab === "guests" ? (
-                  <Users size={18} />
-                ) : (
-                  <CheckCircle2 size={18} />
-                )}
-                <h1>Editor de boda</h1>
-              </div>
-              {/* Botones para mover de posicion el panel */}
-              <div
-                className="panel-position-controls"
-                aria-label="Controles de posicion del panel"
-              >
-                {editorTab === "design" && (
-                  <>
-                    <button
-                      className={editorSide === "left" ? "hidden" : "active"}
-                      type="button"
-                      onClick={() => setEditorSide("left")}
-                    >
-                      <PanelLeft size={15} />
-                    </button>
-                    <button
-                      className={editorSide === "right" ? "hidden" : "active"}
-                      type="button"
-                      onClick={() => setEditorSide("right")}
-                    >
-                      <PanelRight size={15} />
-                    </button>
-                  </>
-                )}
-              </div>
-            </div>
-            <div className="editor-tabs" aria-label="Pestanas del editor">
+          <nav className="editor-workspace-nav" aria-label="Areas del editor">
+            <div className="editor-tabs">
               <button
                 className={editorTab === "design" ? "active" : ""}
                 type="button"
@@ -419,28 +420,67 @@ export function Dashboard({
                 Confirmaciones
               </button>
             </div>
+          </nav>
 
+          <aside className="editor-panel">
+            {editorTab === "design" && (
+              <div
+                className="editor-resize-handle"
+                role="separator"
+                aria-label="Cambiar ancho del editor"
+                aria-orientation="vertical"
+                aria-valuemin={340}
+                aria-valuemax={620}
+                aria-valuenow={editorPanelWidth}
+                tabIndex={0}
+                onKeyDown={resizeEditorWithKeyboard}
+                onPointerDown={resizeEditorPanel}
+              >
+                <span />
+              </div>
+            )}
+            <div className="panel-title flex items-center justify-between" aria-label="Titulo del panel del editor">
+              <div className="flex items-center gap-2">
+                {editorTab === "design" ? (
+                  <LayoutTemplate size={18} />
+                ) : editorTab === "guests" ? (
+                  <Users size={18} />
+                ) : (
+                  <CheckCircle2 size={18} />
+                )}
+                <h1>Editor de boda</h1>
+              </div>
+              {/* Botones para mover de posicion el panel */}
+              <div
+                className="panel-position-controls"
+                aria-label="Controles de posicion del panel"
+              >
+                {editorTab === "design" && (
+                  <>
+                    <button
+                      className={editorSide === "left" ? "hidden" : "active"}
+                      type="button"
+                      onClick={() => setEditorSide("left")}
+                      title="Mover editor a la izquierda"
+                      aria-label="Mover editor a la izquierda"
+                    >
+                      <PanelLeft size={15} />
+                    </button>
+                    <button
+                      className={editorSide === "right" ? "hidden" : "active"}
+                      type="button"
+                      onClick={() => setEditorSide("right")}
+                      title="Mover editor a la derecha"
+                      aria-label="Mover editor a la derecha"
+                    >
+                      <PanelRight size={15} />
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
             {editorTab === "design" ? (
               <>
-                <div
-                  className="editor-layout-controls"
-                  aria-label="Configuracion del panel del editor"
-                >
-                  <label>
-                    Tamano del editor
-                    <input
-                      max={620}
-                      min={340}
-                      step={20}
-                      type="range"
-                      value={editorPanelWidth}
-                      onChange={(event) =>
-                        setEditorPanelWidth(Number(event.target.value))
-                      }
-                    />
-                    <span>{editorPanelWidth}px</span>
-                  </label>
-                </div>
                 <EditorFields
                   settings={settings}
                   onChange={updateSettings}

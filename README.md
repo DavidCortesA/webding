@@ -89,7 +89,7 @@ Variables esperadas:
 
 ```env
 VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
-VITE_SUPABASE_ANON_KEY=tu_anon_key
+VITE_SUPABASE_PUBLISHABLE_KEY=tu_publishable_key
 ```
 
 Ejecuta el proyecto:
