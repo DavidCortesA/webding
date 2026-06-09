@@ -1,7 +1,7 @@
 import { defaultPhotoCaptions, defaultSectionOrder, defaultSettings } from '../data/catalogs'
 import type { SectionKey, WeddingPageRow, WeddingSettings } from '../types'
 import { getDnsInstructions, normalizeDomain } from './domain'
-import { supabaseUrl } from '../lib/supabase'
+import { supabase, supabaseUrl } from '../lib/supabase'
 
 export const localStorageKey = 'webding-pages'
 
@@ -177,4 +177,23 @@ export function writeLocalPage(row: WeddingPageRow) {
 export function deleteLocalPage(pageId: string) {
   const pages = readLocalPages().filter((page) => page.id !== pageId)
   localStorage.setItem(localStorageKey, JSON.stringify(pages))
+}
+
+export async function confirmAttendance(guestId: string, confirmedGuests: number) {
+  return supabase.functions.invoke('send-rsvp-notification', {
+    body: {
+      guestId,
+      status: 'confirmed',
+      confirmedGuests,
+    },
+  })
+}
+
+export async function declineAttendance(guestId: string) {
+  return supabase.functions.invoke('send-rsvp-notification', {
+    body: {
+      guestId,
+      status: 'declined',
+    },
+  })
 }

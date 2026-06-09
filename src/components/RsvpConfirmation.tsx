@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import { CheckCircle2, MessageCircle, Users, XCircle } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import type { RsvpStatus, WeddingGuestRow, WeddingPageRow, WeddingSettings } from '../types'
-import { normalizeSettings } from '../utils/wedding'
+import { normalizeSettings, confirmAttendance, declineAttendance } from '../utils/wedding'
 import { WeddingPreview } from './WeddingPreview'
 import { BrandLogo } from './BrandLogo'
 
@@ -110,6 +110,13 @@ export function RsvpConfirmation({
 
     if (updated) {
       setData((current) => current ? { ...current, guest: updated as WeddingGuestRow } : current)
+
+      if (status === 'confirmed') {
+        await confirmAttendance(data.guest.id, nextConfirmedGuests)
+      } else if (status === 'declined') {
+        await declineAttendance(data.guest.id)
+      }
+
       setSubmitted(true)
     }
     setSaving(false)
