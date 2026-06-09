@@ -5,7 +5,9 @@ import { Dashboard } from './components/Dashboard'
 import { LegalPage } from './components/LegalPage'
 import { Marketing } from './components/Marketing'
 import { PublicInvitation } from './components/PublicInvitation'
+import { ResetPasswordPage } from './components/ResetPasswordPage'
 import { RsvpConfirmation } from './components/RsvpConfirmation'
+import { OtpExpiredPage } from './components/OtpExpiredPage'
 import { supabase } from './lib/supabase'
 import { getPlatformDomain, normalizeDomain } from './utils/domain'
 import './App.css'
@@ -39,6 +41,17 @@ function App() {
   const path = window.location.pathname.replace(/\/$/, '')
   const hashRoute = window.location.hash.replace(/^#/, '')
   const hash = window.location.hash || '#home'
+
+  // Detectar error de OTP expirado
+  const searchParams = new URLSearchParams(window.location.search)
+  if (searchParams.get('error_code') === 'otp_expired') {
+    return <OtpExpiredPage />
+  }
+
+  // Detectar si estamos en reset de password con token válido
+  if (path === '/auth/reset-password' || hashRoute.includes('access_token') && searchParams.get('type') === 'recovery') {
+    return <ResetPasswordPage />
+  }
 
   if (path === '/terminos' || hash === '#terms') {
     return <LegalPage type="terms" />
