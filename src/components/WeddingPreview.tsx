@@ -26,7 +26,7 @@ export function WeddingPreview({ settings: rawSettings, compact = false }: { set
   const [musicEnabled, setMusicEnabled] = useState(true)
   const [playlistEnabled, setPlaylistEnabled] = useState(true)
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null)
-  const counter = useMemo(() => getDaysLeft(settings.date, now), [settings.date, now])
+  const counter = useMemo(() => getDaysLeft(settings.religiousCeremonyDate, now), [settings.religiousCeremonyDate, now])
   const template = templates.find((item) => item.key === settings.templateKey)
   const galleryPhotos = settings.photos
     .slice(1, 10)
@@ -293,7 +293,7 @@ export function WeddingPreview({ settings: rawSettings, compact = false }: { set
           <h1>
             {settings.bride} & {settings.groom}
           </h1>
-          <p>{new Date(settings.date).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+          <p>{new Date(settings.religiousCeremonyDate).toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
         </div>
       </section>
 
